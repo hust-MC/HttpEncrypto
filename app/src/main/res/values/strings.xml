@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NetEncrypto</string>
+    <string name="send_request">发起一次Http请求</string>
+</resources>
