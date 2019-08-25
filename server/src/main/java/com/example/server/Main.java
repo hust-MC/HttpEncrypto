@@ -3,13 +3,24 @@ package com.example.server;
 import com.example.server.http.HttpCallback;
 import com.example.server.http.HttpServer;
 
+/**
+ * Server主程序。
+ * 负责启动Http服务器，接受客户端的Http请求，解析Http的请求内容并返回响应数据。
+ */
 public class Main {
 
-
+    /**
+     * 入口程序
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.println("Start");
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
+            /**
+             * 记录连接次数
+             */
             private int mCount;
 
             @Override

@@ -8,7 +8,6 @@ import java.util.concurrent.Executors;
 
 public class HttpServer {
 
-    private int mCount;
     private boolean mRunning;
     private HttpCallback mHttpCallback;
 
@@ -43,6 +42,4 @@ public class HttpServer {
     public void stopHttpServer() {
         mRunning = false;
     }
-
-
 }

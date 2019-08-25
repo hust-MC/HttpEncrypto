@@ -10,7 +10,7 @@ public class HttpThread implements Runnable {
     private Socket mSocket;
     private HttpCallback mHttpCallback;
 
-    public HttpThread(Socket socket, HttpCallback callback) {
+    HttpThread(Socket socket, HttpCallback callback) {
         mSocket = socket;
         mHttpCallback = callback;
     }
@@ -21,7 +21,7 @@ public class HttpThread implements Runnable {
 
             InputStream inputStream = mSocket.getInputStream();
 
-            //获取HTTP请求头
+            // 获取HTTP请求头
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);
