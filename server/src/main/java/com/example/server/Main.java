@@ -1,5 +1,6 @@
 package com.example.server;
 
+import com.example.server.crypto.Aes;
 import com.example.server.http.HttpCallback;
 import com.example.server.http.HttpServer;
 
@@ -16,6 +17,15 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.println("Start");
+
+
+        String str = "哈哈哈";
+        Aes aes = new Aes();
+        byte[] encrypted = aes.encrypt(str);
+
+        System.out.println("the encrypted code is : " + new String(encrypted));
+
+        System.out.println("the origin code is : " + new String(aes.decrypt(encrypted)));
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
             /**
