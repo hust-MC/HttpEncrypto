@@ -8,7 +8,6 @@ import okhttp3.Request;
 public class HttpRequest {
 
     private Call mCall;
-    private Callback mCallback = new HttpCallback();
 
     public HttpRequest(String url) {
         OkHttpClient client = new OkHttpClient();
@@ -17,12 +16,12 @@ public class HttpRequest {
 
     }
 
-    public void request() {
+    public void request(Callback callback) {
         if (mCall != null) {
             if (mCall.isExecuted()) {
-                mCall.clone().enqueue(mCallback);
+                mCall.clone().enqueue(callback);
             } else {
-                mCall.enqueue(mCallback);
+                mCall.enqueue(callback);
             }
         }
     }

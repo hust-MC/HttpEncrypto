@@ -10,6 +10,8 @@ import com.example.server.http.HttpServer;
  */
 public class Main {
 
+    private static final String CONTENT = "这是第%d次请求";
+
     /**
      * 入口程序
      *
@@ -19,12 +21,11 @@ public class Main {
         System.out.println("Start");
 
 
-        String str = "哈哈哈";
-        Aes aes = new Aes();
+        String str = "这是一段明文";
+        final Aes aes = new Aes();
         byte[] encrypted = aes.encrypt(str);
 
         System.out.println("the encrypted code is : " + new String(encrypted));
-
         System.out.println("the origin code is : " + new String(aes.decrypt(encrypted)));
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
@@ -38,7 +39,7 @@ public class Main {
                 // 接收到response，可以做相关的解析，获取其中的业务参数及客户端信息。
                 System.out.println(response);
 
-                return "这是第" + ++mCount + "次请求";
+                return new String(aes.encrypt(String.format(CONTENT, ++mCount)));
             }
         });
         // 启动Http服务
