@@ -20,13 +20,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Start");
 
-
-        String str = "这是一段明文";
         final Aes aes = new Aes();
-        byte[] encrypted = aes.encrypt(str);
-
-        System.out.println("the encrypted code is : " + new String(encrypted));
-        System.out.println("the origin code is : " + new String(aes.decrypt(encrypted)));
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
             /**
@@ -40,8 +34,10 @@ public class Main {
                 System.out.println(request);
 
                 if (isHandshake(request)) {
+                    // 如果当前是握手请求，则返回AES key
                     return aes.getKey();
                 }
+                // 如果不是握手请求，则返回加密后的业务数据
                 return aes.encrypt(String.format(CONTENT, ++mCount));
             }
         });
@@ -49,7 +45,7 @@ public class Main {
         httpServer.startHttpServer();
     }
 
-    public static boolean isHandshake(String request) {
+    private static boolean isHandshake(String request) {
         return (request != null && request.contains(Aes.HANDSHAKE));
     }
 

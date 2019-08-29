@@ -18,22 +18,33 @@ import java.io.IOException;
 public class MainActivity extends Activity {
 
     private static final String TAG = "MCLOG";
+    /**
+     * AES对称密钥
+     */
     private byte[] mAesKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final HttpRequest request = new HttpRequest("http://172.24.123.58");
-
+        // 创建Http请求对象，用于后续发起Http请求
+        HttpRequest request = new HttpRequest("http://172.24.123.58");
+        // 添加点击事件
         findViewById(R.id.send_bt).setOnClickListener(new RequestClick(request));
     }
 
+    /**
+     * 点击发起请求监听器
+     */
     private class RequestClick implements OnClickListener {
-
+        // Http请求
         private HttpRequest mRequest;
 
+        /**
+         * 请求点击监听器
+         *
+         * @param request 请求对象
+         */
         RequestClick(HttpRequest request) {
             mRequest = request;
         }
@@ -41,6 +52,7 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             if (mAesKey == null || mAesKey.length <= 0) {
+                // 当前未获取AES密钥，发起握手协议请求密钥
                 mRequest.handshake(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -54,6 +66,7 @@ public class MainActivity extends Activity {
                     }
                 });
             } else {
+                // 如果已经有Aes key，则直接发起业务请求
                 mRequest.request(new Callback() {
 
                     @Override
