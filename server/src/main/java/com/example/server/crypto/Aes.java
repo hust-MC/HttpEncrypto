@@ -19,6 +19,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class Aes {
 
     private static final String ALGORITHM = "Aes";
+    public static final String HANDSHAKE = "handshake";
+
 
     private SecretKey mKey;
 

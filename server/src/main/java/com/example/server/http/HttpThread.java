@@ -1,7 +1,8 @@
 package com.example.server.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
@@ -18,19 +19,21 @@ public class HttpThread implements Runnable {
     @Override
     public void run() {
         try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
 
-            InputStream inputStream = mSocket.getInputStream();
+            String content;
+            StringBuilder request = new StringBuilder();
 
-            // 获取HTTP请求头
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            String request = new String(buffer);
+
+            while ((content = reader.readLine()) != null && !content.trim().isEmpty()) {
+                request.append(content).append("\n\r");
+            }
+
             System.out.println("request:\n" + request + "\n");
 
-            String response = "";
+            byte[] response = new byte[0];
             if (mHttpCallback != null) {
-                response = mHttpCallback.onResponse(request);
+                response = mHttpCallback.onResponse(request.toString());
             }
 
             //将响应头发送给客户端
@@ -43,8 +46,10 @@ public class HttpThread implements Runnable {
             outSocket.write(responseFirstLine.getBytes());
             outSocket.write(responseHead.getBytes());
             outSocket.write("\r\n".getBytes());
-            outSocket.write(response.getBytes());
+            outSocket.write(response);
             mSocket.close();
+            outSocket.close();
+            reader.close();
 
         } catch (IOException e) {
             e.printStackTrace();

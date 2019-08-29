@@ -35,15 +35,22 @@ public class Main {
             private int mCount;
 
             @Override
-            public String onResponse(String response) {
+            public byte[] onResponse(String request) {
                 // 接收到response，可以做相关的解析，获取其中的业务参数及客户端信息。
-                System.out.println(response);
+                System.out.println(request);
 
-                return new String(aes.encrypt(String.format(CONTENT, ++mCount)));
+                if (isHandshake(request)) {
+                    return aes.getKey();
+                }
+                return aes.encrypt(String.format(CONTENT, ++mCount));
             }
         });
         // 启动Http服务
         httpServer.startHttpServer();
+    }
+
+    public static boolean isHandshake(String request) {
+        return (request != null && request.contains(Aes.HANDSHAKE));
     }
 
 }
