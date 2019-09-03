@@ -24,8 +24,10 @@ public class Aes {
 
     private SecretKey mKey;
 
+    /**
+     * 无参构造器。调用此构造器将生成随机数作为AES密钥
+     */
     public Aes() {
-
         try {
             // 获取秘钥生成器
             KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
@@ -41,6 +43,11 @@ public class Aes {
         }
     }
 
+    /**
+     * 有参构造器。接收一个byte数组类型的key作为AES密钥
+     *
+     * @param key 指定AES密钥
+     */
     public Aes(byte[] key) {
         mKey = new SecretKeySpec(key, ALGORITHM);
     }
@@ -54,6 +61,11 @@ public class Aes {
         return mKey.getEncoded();
     }
 
+    /**
+     * 设置AES密钥
+     *
+     * @param key 指定的AES密钥
+     */
     public void setKey(byte[] key) {
         mKey = new SecretKeySpec(key, ALGORITHM);
     }

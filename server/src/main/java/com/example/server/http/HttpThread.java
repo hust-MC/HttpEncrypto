@@ -12,6 +12,7 @@ import java.net.Socket;
 public class HttpThread implements Runnable {
 
     private Socket mSocket;
+    /** Http请求回调，用于将收到的客户端消息传递给使用方，并接收来自使用方的响应，通过Http返回给客户端 */
     private HttpCallback mHttpCallback;
 
     HttpThread(Socket socket, HttpCallback callback) {
