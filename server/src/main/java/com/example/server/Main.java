@@ -53,6 +53,12 @@ public class Main {
         httpServer.startHttpServer();
     }
 
+    /**
+     * 通过request中header是否有Handshake字段判断握手请求
+     *
+     * @param request request内容
+     * @return 是否是握手请求
+     */
     private static boolean isHandshake(String request) {
         return (request != null && request.contains(Aes.HANDSHAKE));
     }

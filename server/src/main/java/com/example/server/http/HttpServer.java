@@ -64,6 +64,7 @@ public class HttpServer {
         Map<String, String> header = new HashMap<>();
 
         try {
+            // 逐行解析request，得到Header信息
             BufferedReader reader = new BufferedReader(new StringReader(request));
             String line = reader.readLine();
 
