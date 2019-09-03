@@ -1,8 +1,12 @@
 package com.example.server;
 
 import com.example.server.crypto.Aes;
+import com.example.server.crypto.DH;
+import com.example.server.crypto.DataUtils;
 import com.example.server.http.HttpCallback;
 import com.example.server.http.HttpServer;
+
+import java.util.Map;
 
 /**
  * Server主程序。
@@ -21,6 +25,7 @@ public class Main {
         System.out.println("Start");
 
         final Aes aes = new Aes();
+        final DH dh = new DH();
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
             /**
@@ -34,8 +39,11 @@ public class Main {
                 System.out.println(request);
 
                 if (isHandshake(request)) {
-                    // 如果当前是握手请求，则返回AES key
-                    return aes.getKey();
+                    // 如果当前是握手请求，则返回DH公钥
+                    Map<String, String> header = HttpServer.getHeader(request);
+                    int dhPubKey = Integer.valueOf(header.get(Aes.HANDSHAKE));
+                    aes.setKey(dh.get_secret_key(dhPubKey));
+                    return DataUtils.int2Byte(dh.get_public_key());
                 }
                 // 如果不是握手请求，则返回加密后的业务数据
                 return aes.encrypt(String.format(CONTENT, ++mCount));

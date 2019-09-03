@@ -31,7 +31,7 @@ public class HttpThread implements Runnable {
 
             // 完成客户端请求内容的逐行读入
             while ((content = reader.readLine()) != null && !content.trim().isEmpty()) {
-                request.append(content).append("\n\r");
+                request.append(content).append("\n");
             }
 
             System.out.println("request:\n" + request + "\n");
@@ -54,8 +54,6 @@ public class HttpThread implements Runnable {
             outSocket.write("\r\n".getBytes());
             outSocket.write(response);
             mSocket.close();
-            outSocket.close();
-            reader.close();
 
         } catch (IOException e) {
             e.printStackTrace();

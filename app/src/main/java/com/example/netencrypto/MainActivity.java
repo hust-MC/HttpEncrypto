@@ -12,6 +12,7 @@ import okhttp3.Response;
 
 import com.example.netencrypto.http.HttpRequest;
 import com.example.server.crypto.Aes;
+import com.example.server.crypto.DH;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // 创建Http请求对象，用于后续发起Http请求
-        HttpRequest request = new HttpRequest("http://172.24.123.58");
+        HttpRequest request = new HttpRequest("http://172.24.123.164");
         // 添加点击事件
         findViewById(R.id.send_bt).setOnClickListener(new RequestClick(request));
     }
@@ -53,6 +54,8 @@ public class MainActivity extends Activity {
         public void onClick(View v) {
             if (mAesKey == null || mAesKey.length <= 0) {
                 // 当前未获取AES密钥，发起握手协议请求密钥
+
+                final DH dh = new DH();
                 mRequest.handshake(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -61,10 +64,11 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        mAesKey = response.body().bytes();
+                        byte[] pubKey = response.body().bytes();
+                        mAesKey = dh.get_secret_key(pubKey);
                         Log.e(TAG, "Get方式获取密钥成功，result--->" + new String(mAesKey));
                     }
-                });
+                }, dh.get_public_key());
             } else {
                 // 如果已经有Aes key，则直接发起业务请求
                 mRequest.request(new Callback() {
