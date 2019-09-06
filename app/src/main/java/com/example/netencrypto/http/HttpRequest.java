@@ -29,9 +29,9 @@ public class HttpRequest {
      *
      * @param callback 请求回调
      */
-    public void handshake(Callback callback, int pubKey) {
+    public void handshake(Callback callback, String pubKey) {
         // 增加Http头，表示握手连接
-        mBuilder.addHeader(HANDSHAKE, String.valueOf(pubKey));
+        mBuilder.addHeader(HANDSHAKE, pubKey);
         request(callback);
         mBuilder.removeHeader(HANDSHAKE);
     }

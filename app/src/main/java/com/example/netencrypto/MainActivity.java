@@ -12,6 +12,7 @@ import okhttp3.Response;
 
 import com.example.crypto.Aes;
 import com.example.crypto.DH;
+import com.example.crypto.RSA;
 import com.example.netencrypto.http.HttpRequest;
 
 import java.io.IOException;
@@ -23,6 +24,10 @@ public class MainActivity extends Activity {
      * AES对称密钥
      */
     private byte[] mAesKey;
+    private static final String RSA_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0QWE2lO466f12i3LsXlFQRNG3\n" +
+            "KVaOH+uS9i4dK+rlRKYVh7nq/QWHtWKqXQPnObrXv+G4IGnW1/PW02p1HyXu3kOv\n" +
+            "JganS6enQ9fsKcz4ldhCt83yNOWgLOUh5ZK7/b5ZmMzhTYHV/yqvhns1/ysRkLom\n" +
+            "KeMj+1Uv6FqxN+D94wIDAQAB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class MainActivity extends Activity {
             if (mAesKey == null || mAesKey.length <= 0) {
                 // 当前未获取AES密钥，发起握手协议请求密钥
                 final DH dh = new DH();
+
                 mRequest.handshake(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -67,7 +73,7 @@ public class MainActivity extends Activity {
                         mAesKey = dh.get_secret_key(pubKey);
                         Log.e(TAG, "Get方式获取密钥成功，result--->" + new String(mAesKey));
                     }
-                }, dh.get_public_key());
+                }, RSA.encrypt(dh.get_public_key(), RSA_KEY));
             } else {
                 // 如果已经有Aes key，则直接发起业务请求
                 mRequest.request(new Callback() {
