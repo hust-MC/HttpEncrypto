@@ -1,6 +1,7 @@
-package com.example.server.crypto;
+package com.example.crypto;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -80,14 +81,12 @@ public class Aes {
             // 初始化加密器
             cipher.init(Cipher.ENCRYPT_MODE, mKey);
             // 加密
-            return cipher.doFinal(content.getBytes("UTF-8"));
+            return cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();

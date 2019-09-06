@@ -10,9 +10,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import com.example.crypto.Aes;
+import com.example.crypto.DH;
 import com.example.netencrypto.http.HttpRequest;
-import com.example.server.crypto.Aes;
-import com.example.server.crypto.DH;
 
 import java.io.IOException;
 
@@ -54,7 +54,6 @@ public class MainActivity extends Activity {
         public void onClick(View v) {
             if (mAesKey == null || mAesKey.length <= 0) {
                 // 当前未获取AES密钥，发起握手协议请求密钥
-
                 final DH dh = new DH();
                 mRequest.handshake(new Callback() {
                     @Override

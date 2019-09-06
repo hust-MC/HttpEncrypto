@@ -1,4 +1,4 @@
-package com.example.server.crypto;
+package com.example.crypto;
 
 import java.nio.ByteBuffer;
 
