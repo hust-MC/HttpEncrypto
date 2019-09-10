@@ -25,7 +25,7 @@ public class DH {
      */
     public DH() {
         Random r = new Random();
-        mPrivateKey = r.nextInt(10);
+        mPrivateKey = 3;//r.nextInt(10);
         System.out.println("private key is : " + mPrivateKey);
 
     }

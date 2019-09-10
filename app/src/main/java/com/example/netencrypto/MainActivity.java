@@ -27,17 +27,18 @@ public class MainActivity extends Activity {
     /**
      * 通过OpenSSL生成的RSA公钥
      */
-    private static final String RSA_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCkqccrUNPRW7MEX9ph3Yx/5KEW\n" +
-            "WSUkI5+UnecrrimZUAm+p7KMH4v01r0sjQNYhBLhPLNBS/PEWN93IJIdVBrfyV+S\n" +
-            "hXQhr0j5V8pV0h4kBFLZedSckO7+VXQKaEuxL/BUVSRpmIY8JO40jvFrjlxsuQ2q\n" +
+    public static final String RSA_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCkqccrUNPRW7MEX9ph3Yx/5KEW" +
+            "WSUkI5+UnecrrimZUAm+p7KMH4v01r0sjQNYhBLhPLNBS/PEWN93IJIdVBrfyV+S" +
+            "hXQhr0j5V8pV0h4kBFLZedSckO7+VXQKaEuxL/BUVSRpmIY8JO40jvFrjlxsuQ2q" +
             "lNz+up6/pSSeWrtoVQIDAQAB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // 创建Http请求对象，用于后续发起Http请求
-        HttpRequest request = new HttpRequest("http://172.24.122.168");
+        HttpRequest request = new HttpRequest("http://172.24.123.55");
         // 添加点击事件
         findViewById(R.id.send_bt).setOnClickListener(new RequestClick(request));
     }
@@ -63,6 +64,7 @@ public class MainActivity extends Activity {
             if (mAesKey == null || mAesKey.length <= 0) {
                 // 当前未获取AES密钥，发起握手协议请求密钥
                 final DH dh = new DH();
+                Log.e("MCLOG", "pub key is " + dh.get_public_key());
 
                 mRequest.handshake(new Callback() {
                     @Override

@@ -1,5 +1,7 @@
 package com.example.netencrypto.http;
 
+import android.util.Log;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -32,6 +34,7 @@ public class HttpRequest {
     public void handshake(Callback callback, String pubKey) {
         // 增加Http头，表示握手连接
         mBuilder.addHeader(HANDSHAKE, pubKey);
+
         request(callback);
         mBuilder.removeHeader(HANDSHAKE);
     }

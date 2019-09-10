@@ -7,6 +7,7 @@ import com.example.crypto.RSA;
 import com.example.server.http.HttpCallback;
 import com.example.server.http.HttpServer;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -15,19 +16,20 @@ import java.util.Map;
  */
 public class Main {
 
-    private static final String RSA_KEY = "MIICXQIBAAKBgQCkqccrUNPRW7MEX9ph3Yx/5KEWWSUkI5+UnecrrimZUAm+p7KM\n" +
-            "H4v01r0sjQNYhBLhPLNBS/PEWN93IJIdVBrfyV+ShXQhr0j5V8pV0h4kBFLZedSc\n" +
-            "kO7+VXQKaEuxL/BUVSRpmIY8JO40jvFrjlxsuQ2qlNz+up6/pSSeWrtoVQIDAQAB\n" +
-            "AoGAMHYnQABR1tP+I9NyGktyBlHrdwBVhgVV+g9e8eQYKh78PzhrvAGs1yo8EtiN\n" +
-            "m4eDZvbOavFHlQny+sSDPE58eddZGi8hn0ztjUGQqyZtla7sbW9yzw0pZsTmAsgi\n" +
-            "4kISw97TE5ZoDk7B26JnteRsQUQ56I7nZXjLJkkgBf93cQECQQDa2Kw8fVHXeAmA\n" +
-            "pwUEV1BK8HpJ7WrMI1qlelx8dt3wtksCuDYGOoXU12VK1TtV7CL56OKRSBbxwUJC\n" +
-            "A1NN+TLJAkEAwJ49Ix0OuIjq98NELi2pMTvFR+WD89PDWgMiNoHCuSkuW5FwSWhs\n" +
-            "o8G6SsFLWQHkO3A2N9Kk44IUvkFD1hwjLQJAMPa/en0zfXj+70jvJ2x9q3aodbfn\n" +
-            "6CqU0mdRIAvcVkoC+GXMuJIJdXiH0jlpIC1IGhAP+R9e+tIZh/mEfvKdeQJBAIWX\n" +
-            "unN2HdWjMMRyrAETLju1Zti8uM4N23m8nqgLS5C8nShpMOXZBTB2lsxuT+IFy9Pl\n" +
-            "udTxxeb9O4HRJkmD7mkCQQDMLVhZe7TMS5UF2aCoys5jVMe75wd8oCVvQcxugwkA\n" +
-            "kv0rGxGoMSQK3aF/MgDbPZwUTHnaa9TzHWj9bwPW/531";
+    public static final String RSA_KEY = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKSpxytQ09FbswRf" +
+            "2mHdjH/koRZZJSQjn5Sd5yuuKZlQCb6nsowfi/TWvSyNA1iEEuE8s0FL88RY33cg" +
+            "kh1UGt/JX5KFdCGvSPlXylXSHiQEUtl51JyQ7v5VdApoS7Ev8FRVJGmYhjwk7jSO" +
+            "8WuOXGy5DaqU3P66nr+lJJ5au2hVAgMBAAECgYAwdidAAFHW0/4j03IaS3IGUet3" +
+            "AFWGBVX6D17x5BgqHvw/OGu8AazXKjwS2I2bh4Nm9s5q8UeVCfL6xIM8Tnx511ka" +
+            "LyGfTO2NQZCrJm2Vruxtb3LPDSlmxOYCyCLiQhLD3tMTlmgOTsHbome15GxBRDno" +
+            "judleMsmSSAF/3dxAQJBANrYrDx9Udd4CYCnBQRXUErwekntaswjWqV6XHx23fC2" +
+            "SwK4NgY6hdTXZUrVO1XsIvno4pFIFvHBQkIDU035MskCQQDAnj0jHQ64iOr3w0Qu" +
+            "LakxO8VH5YPz08NaAyI2gcK5KS5bkXBJaGyjwbpKwUtZAeQ7cDY30qTjghS+QUPW" +
+            "HCMtAkAw9r96fTN9eP7vSO8nbH2rdqh1t+foKpTSZ1EgC9xWSgL4Zcy4kgl1eIfS" +
+            "OWkgLUgaEA/5H1760hmH+YR+8p15AkEAhZe6c3Yd1aMwxHKsARMuO7Vm2Ly4zg3b" +
+            "ebyeqAtLkLydKGkw5dkFMHaWzG5P4gXL0+W51PHF5v07gdEmSYPuaQJBAMwtWFl7" +
+            "tMxLlQXZoKjKzmNUx7vnB3ygJW9BzG6DCQCS/SsbEagxJArdoX8yANs9nBRMedpr" +
+            "1PMdaP1vA9b/nfU=";
 
     private static final String CONTENT = "这是第%d次请求";
 
@@ -41,15 +43,6 @@ public class Main {
 
         final Aes aes = new Aes();
         final DH dh = new DH();
-//        System.out.println("DH : " + dh.get_public_key());
-//
-//        String encrypted = RSA.encrypt(dh.get_public_key(), RSA.RSA_PUB_KEY);
-//        System.out.println(encrypted);
-//
-//        String content = RSA.decrypt(encrypted, RSA.RSA_PRI_KEY);
-//
-//        System.out.println(content);
-
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
             /**
@@ -66,6 +59,7 @@ public class Main {
                     // 如果当前是握手请求，则返回DH公钥
                     Map<String, String> header = HttpServer.getHeader(request);
                     String handshake = header.get(Aes.HANDSHAKE);
+                    System.out.println("handshake is : " + handshake);
                     int dhPubKey = Integer.valueOf(RSA.decrypt(handshake, RSA_KEY));
                     aes.setKey(dh.get_secret_key(dhPubKey));
                     return DataUtils.int2Byte(dh.get_public_key());
