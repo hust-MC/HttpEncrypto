@@ -13,7 +13,7 @@ public class DataUtils {
      * @param bytes 待转换的字节数组
      * @return 将字节数组拼接成整形数
      */
-    public static int byte2Int(byte[] bytes) {
+    static int byte2Int(byte[] bytes) {
         // 将byte[] 封装为 ByteBuffer
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
         return buffer.getInt();

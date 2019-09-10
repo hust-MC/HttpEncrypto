@@ -1,6 +1,5 @@
 package com.example.crypto;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -19,10 +18,12 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class Aes {
 
+    /** 算法名称 */
     private static final String ALGORITHM = "Aes";
+    /** 握手Key */
     public static final String HANDSHAKE = "handshake";
 
-
+    /** AES密钥 */
     private SecretKey mKey;
 
     /**

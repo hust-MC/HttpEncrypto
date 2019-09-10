@@ -24,17 +24,20 @@ public class MainActivity extends Activity {
      * AES对称密钥
      */
     private byte[] mAesKey;
-    private static final String RSA_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0QWE2lO466f12i3LsXlFQRNG3\n" +
-            "KVaOH+uS9i4dK+rlRKYVh7nq/QWHtWKqXQPnObrXv+G4IGnW1/PW02p1HyXu3kOv\n" +
-            "JganS6enQ9fsKcz4ldhCt83yNOWgLOUh5ZK7/b5ZmMzhTYHV/yqvhns1/ysRkLom\n" +
-            "KeMj+1Uv6FqxN+D94wIDAQAB";
+    /**
+     * 通过OpenSSL生成的RSA公钥
+     */
+    private static final String RSA_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCkqccrUNPRW7MEX9ph3Yx/5KEW\n" +
+            "WSUkI5+UnecrrimZUAm+p7KMH4v01r0sjQNYhBLhPLNBS/PEWN93IJIdVBrfyV+S\n" +
+            "hXQhr0j5V8pV0h4kBFLZedSckO7+VXQKaEuxL/BUVSRpmIY8JO40jvFrjlxsuQ2q\n" +
+            "lNz+up6/pSSeWrtoVQIDAQAB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // 创建Http请求对象，用于后续发起Http请求
-        HttpRequest request = new HttpRequest("http://172.24.123.164");
+        HttpRequest request = new HttpRequest("http://172.24.122.168");
         // 添加点击事件
         findViewById(R.id.send_bt).setOnClickListener(new RequestClick(request));
     }

@@ -15,19 +15,19 @@ import java.util.Map;
  */
 public class Main {
 
-    private static final String RSA_KEY = "MIICXAIBAAKBgQC0QWE2lO466f12i3LsXlFQRNG3KVaOH+uS9i4dK+rlRKYVh7nq\n" +
-            "/QWHtWKqXQPnObrXv+G4IGnW1/PW02p1HyXu3kOvJganS6enQ9fsKcz4ldhCt83y\n" +
-            "NOWgLOUh5ZK7/b5ZmMzhTYHV/yqvhns1/ysRkLomKeMj+1Uv6FqxN+D94wIDAQAB\n" +
-            "AoGACaKA/rjhLvb43FBB2U6FTCQRjZfBD6G3JsjP2DFTweN0eSwjDONvWzyfxHlq\n" +
-            "Tv6v9P5Fo2DgJ2Ktnur4AsCid1YiOQR7ILc60/rk/cUV7l9jW4//pYWTZe/nfwc1\n" +
-            "1v5l2EjcGGPVMfViyVky+5pkXZ7c4CbDi6rSSeyOU/PBHOkCQQDdt7O590/vpDKX\n" +
-            "BhxsutERnJ1eu3XEMCiSRojEh7t1edwd18RkQ2EqV2FAvQlVb+EPRllRcp78MKaZ\n" +
-            "zR+OktUHAkEA0CB4Vn2a3AKi9INrwlrDOiY8q8ijFV1Lg7a4NalHZxnVovpIi5Xg\n" +
-            "JMs2mHIKEZSaKbhGejAta3NolAisCYwVRQJAQgtwrBqxYw8kSrx1RyY3FOn0Lr3k\n" +
-            "jLZTv47nOrO78XiFSxZ01/ECRpyUybYFy79x6Rzpikt8dF8BoZrqpYuzjQJBALx0\n" +
-            "2mJ+483aeVHs+pOHegXaf8+RItMCopFGz7CPcr9R7lfgR/ZVJRxMAkix4poetCWY\n" +
-            "3gBgRZBpdUWuQJF4jf0CQBxdoexfRtPdtDn8mnQoodOS3CHMj1MGJ87QdY5VdkZd\n" +
-            "X6BBxV7H9Ox06m5UEfH7TOhkNIeF+sVroQ2umGvg1as=";
+    private static final String RSA_KEY = "MIICXQIBAAKBgQCkqccrUNPRW7MEX9ph3Yx/5KEWWSUkI5+UnecrrimZUAm+p7KM\n" +
+            "H4v01r0sjQNYhBLhPLNBS/PEWN93IJIdVBrfyV+ShXQhr0j5V8pV0h4kBFLZedSc\n" +
+            "kO7+VXQKaEuxL/BUVSRpmIY8JO40jvFrjlxsuQ2qlNz+up6/pSSeWrtoVQIDAQAB\n" +
+            "AoGAMHYnQABR1tP+I9NyGktyBlHrdwBVhgVV+g9e8eQYKh78PzhrvAGs1yo8EtiN\n" +
+            "m4eDZvbOavFHlQny+sSDPE58eddZGi8hn0ztjUGQqyZtla7sbW9yzw0pZsTmAsgi\n" +
+            "4kISw97TE5ZoDk7B26JnteRsQUQ56I7nZXjLJkkgBf93cQECQQDa2Kw8fVHXeAmA\n" +
+            "pwUEV1BK8HpJ7WrMI1qlelx8dt3wtksCuDYGOoXU12VK1TtV7CL56OKRSBbxwUJC\n" +
+            "A1NN+TLJAkEAwJ49Ix0OuIjq98NELi2pMTvFR+WD89PDWgMiNoHCuSkuW5FwSWhs\n" +
+            "o8G6SsFLWQHkO3A2N9Kk44IUvkFD1hwjLQJAMPa/en0zfXj+70jvJ2x9q3aodbfn\n" +
+            "6CqU0mdRIAvcVkoC+GXMuJIJdXiH0jlpIC1IGhAP+R9e+tIZh/mEfvKdeQJBAIWX\n" +
+            "unN2HdWjMMRyrAETLju1Zti8uM4N23m8nqgLS5C8nShpMOXZBTB2lsxuT+IFy9Pl\n" +
+            "udTxxeb9O4HRJkmD7mkCQQDMLVhZe7TMS5UF2aCoys5jVMe75wd8oCVvQcxugwkA\n" +
+            "kv0rGxGoMSQK3aF/MgDbPZwUTHnaa9TzHWj9bwPW/531";
 
     private static final String CONTENT = "这是第%d次请求";
 
@@ -41,6 +41,15 @@ public class Main {
 
         final Aes aes = new Aes();
         final DH dh = new DH();
+//        System.out.println("DH : " + dh.get_public_key());
+//
+//        String encrypted = RSA.encrypt(dh.get_public_key(), RSA.RSA_PUB_KEY);
+//        System.out.println(encrypted);
+//
+//        String content = RSA.decrypt(encrypted, RSA.RSA_PRI_KEY);
+//
+//        System.out.println(content);
+
 
         HttpServer httpServer = new HttpServer(new HttpCallback() {
             /**
